@@ -20,17 +20,30 @@ contract Plataforma{
         _adicionaProduto(p, tx.origin);
     }
     
-    
-    
 }
 
 contract Cliente{
     
+    address private dono;
     string private nomeCliente;
     string private cpf;
     Produto[]private produtosComprados;
     
-    function 
+    constructor(string memory nome, string memory nCPF)public{
+        dono = tx.origin;
+        nomeCliente = nome;
+        cpf = nCPF;
+    }
+    function adicionaProduto(Produto p)public {
+        produtosComprados.push(p);
+    }
+    
+    function getProdutos()public returns(address owner, string memory nome, string memory nCPF, Produto[] memory produtos){
+        owner = dono;
+        nome = nomeCliente;
+        cpf = nCPF;
+        produtos = produtosComprados;
+    }
     
     
 }
