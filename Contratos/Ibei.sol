@@ -4,9 +4,55 @@ contract Plataforma{
     address private owner;
     Produto[] private todosProdutos;
     mapping(address => Produto[])private produtoLoja;
+    Loja[] private lojasCadastradas;
+    mapping(address => Loja)private infoLoja;
+    Cliente[] private clienteCadastradas;
+    mapping(address => Cliente)private infoCliente;
     
     constructor()public{
         owner = msg.sender;
+    }
+    
+    function cadastraLoja(string memory nome, string memory descricao)public {
+        Loja l = new Loja(nome, descricao);
+        lojasCadastradas.push(l);
+        infoLoja[msg.sender] = l;
+    }
+    
+    function cadastraCliente(string memory nome, string memory cpf)public {
+        Cliente c = new Cliente(nome, cpf);
+        clienteCadastradas.push(c);
+        infoCliente[msg.sender] = c;
+    }
+    
+    function getLojas()public view returns(Loja[] memory lojas){
+        lojas = lojasCadastradas;
+    }
+    
+    function getClientes()public view returns(Cliente[] memory clientes){
+        clientes = clienteCadastradas;
+    }
+    
+    function getProdutos()public view returns(Produto[] memory produtos){
+        produtos = todosProdutos;
+    }
+    
+    function existeLoja(Loja l)public view returns(bool){
+        for(uint i; i<lojasCadastradas.length; i++){
+            if(lojasCadastradas[i] == l){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function existeCliente(Cliente c)public view returns(bool){
+        for(uint i; i<clienteCadastradas.length; i++){
+            if(clienteCadastradas[i] == c){
+                return true;
+            }
+        }
+        return false;
     }
     
     function _adicionaProduto(Produto p, address proprietario)internal {
@@ -18,6 +64,18 @@ contract Plataforma{
     
     function adicionaProduto(Produto p)public {
         _adicionaProduto(p, tx.origin);
+    }
+    
+    function retiraDeVenda(Produto p)public {
+        for(uint i=0; i<todosProdutos.length; i++){
+            if(p == todosProdutos[i]){
+                delete todosProdutos[i];
+            }
+        }
+    }
+    
+    function realizaVenda(Produto p, address donoLoja, uint quantidade)public {
+        infoLoja[donoLoja].vendeProduto(p, quantidade);
     }
     
 }
@@ -45,6 +103,11 @@ contract Cliente{
         produtos = produtosComprados;
     }
     
+    function compraProduto(Produto p, Plataforma plataforma,address donoLoja, uint quantidade)public {
+        require(msg.sender == dono);
+        produtosComprados.push(p);
+        plataforma.realizaVenda(p,donoLoja, quantidade);
+    }
     
 }
 
@@ -96,9 +159,34 @@ contract Loja{
         prods = produtosCadastrados;
     }
     
+    function getQuantidade(Produto p)public view returns(uint quant){
+        quant = infoProduto[address(p)].quantidadeDisponivel;
+    }
+    
     function desativaProduto(Produto prod)public {
         require(msg.sender == proprietario);
         infoProduto[address(prod)].estaAtivo = false;
+    }
+    
+    function vendeProduto(Produto p, uint quantidade)public{
+        require(quantidade > 0);
+        require(infoProduto[address(p)].quantidadeDisponivel >= quantidade);
+        
+        if(infoProduto[address(p)].quantidadeDisponivel == quantidade){
+            infoProduto[address(p)].quantidadeDisponivel = 0;
+            infoProduto[address(p)].estaAtivo = false;
+        }else{
+            infoProduto[address(p)].quantidadeDisponivel -= quantidade;
+        }
+        
+    }
+    
+    function adicionaProduto(Produto p, uint quantidade)public{
+        require(msg.sender == proprietario);
+        if(!infoProduto[address(p)].estaAtivo){
+            infoProduto[address(p)].estaAtivo = true;
+        }
+        infoProduto[address(p)].quantidadeDisponivel += quantidade;
     }
     
 }
