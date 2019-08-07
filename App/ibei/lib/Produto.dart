@@ -1,17 +1,25 @@
 class Produto{
-  String _nome;
-  String _vendedor;
-  double _preco;
   String _idProduto;
+  String _dono;
+  String _nome;
+  String _descricao;
+  double _preco;
+  bool _estaVendido;
 
-  Produto(this._nome, this._vendedor, this._preco, this._idProduto);
+  Produto(this._idProduto, this._dono, this._nome, this._descricao,
+      this._preco, this._estaVendido);
+
+  bool get estaVendido => _estaVendido;
 
   double get preco => _preco;
 
-  String get vendedor => _vendedor;
+  String get descricao => _descricao;
 
   String get nome => _nome;
 
+  String get dono => _dono;
+
   String get idProduto => _idProduto;
+
 
 }

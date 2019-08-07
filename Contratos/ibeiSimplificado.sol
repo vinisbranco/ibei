@@ -55,19 +55,10 @@ contract Plataforma{
     
     function compraProduto(address id, address dono)public{
         require(msg.sender != dono);
+        require(!infoProdutos[id].estaVendido);
         
         infoProdutos[id].estaVendido = true;
-        for(uint i=0; i<ids.length; i++){
-            if(ids[i] == id){
-                delete ids[i];
-            }
-        }
-        
-        for(uint j=0; j<produtosLoja[dono].length; j++){
-            if(produtosLoja[dono][j] == id){
-                delete produtosLoja[dono][j];
-            }
-        }
+        infoProdutos[id].dono = msg.sender;
     }
     
 }
