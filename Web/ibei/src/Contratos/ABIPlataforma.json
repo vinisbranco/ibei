@@ -1,0 +1,128 @@
+[
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getProdutos",
+		"outputs": [
+			{
+				"name": "codigos",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getProdutosLoja",
+		"outputs": [
+			{
+				"name": "codigos",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "address"
+			}
+		],
+		"name": "getProduto",
+		"outputs": [
+			{
+				"name": "dono",
+				"type": "address"
+			},
+			{
+				"name": "nome",
+				"type": "string"
+			},
+			{
+				"name": "descricao",
+				"type": "string"
+			},
+			{
+				"name": "preco",
+				"type": "uint256"
+			},
+			{
+				"name": "estaVendido",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "address"
+			},
+			{
+				"name": "dono",
+				"type": "address"
+			}
+		],
+		"name": "compraProduto",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "address"
+			},
+			{
+				"name": "nome",
+				"type": "string"
+			},
+			{
+				"name": "descricao",
+				"type": "string"
+			},
+			{
+				"name": "preco",
+				"type": "uint256"
+			}
+		],
+		"name": "cadastraProduto",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "dono",
+				"type": "address"
+			}
+		],
+		"name": "getProdutosLoja",
+		"outputs": [
+			{
+				"name": "codigos",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
