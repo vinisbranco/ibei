@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'Produto.dart';
 import 'Api.dart';
-import 'dart:math';
-import 'package:web3dart/web3dart.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ibei',
       theme: new ThemeData(primaryColor: Color.fromRGBO(58, 66, 86, 1.0)),
-      home: MyHomePage(title: 'ShopChain'),
+      home: MyHomePage(title: 'Ibei'),
     );
   }
 }
@@ -60,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
-        title: Text("ShopChain"),
+        title: Text("Ibei"),
         centerTitle: true,
       ),
       body: makeBody(),
@@ -112,8 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       prod.nome,
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
                     subtitle: Row(
                       children: <Widget>[
                         Icon(Icons.attach_money, color: Colors.white),
@@ -121,26 +117,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                     trailing:
-                    (Api.credentials.address.hex.compareTo(prod.dono) == 0) ?
-                    IconButton(
-                      icon:
-                      Icon(Icons.check, color: Colors.green, size: 30.0),
+                    (Api.credentials.address.hex.compareTo(prod.dono) == 0)
+                      ?
+                        IconButton(
+                          icon:
+                          Icon(Icons.check, color: Colors.green, size: 30.0),
 
-                    )
-
-                        : (!prod.estaVendido)
+                        )
+                      : (!prod.estaVendido)
                         ?
-                    IconButton(
-                        icon:
-                        Icon(Icons.shopping_cart, color: Colors.white, size: 30.0),
-                        onPressed: (){compraProduto(prod);}
-                    )
+                          IconButton(
+                              icon:
+                              Icon(Icons.shopping_cart, color: Colors.white, size: 30.0),
+                              onPressed: (){compraProduto(prod);}
+                          )
                         :
-                    IconButton(
-                      icon:
-                      Icon(Icons.do_not_disturb, color: Colors.yellow, size: 30.0),
+                          IconButton(
+                            icon:
+                            Icon(Icons.do_not_disturb, color: Colors.yellow, size: 30.0),
 
-                    )
+                          )
                 ),
               ),
             );
@@ -148,6 +144,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }
-
   }
 }
